@@ -23,7 +23,7 @@ var multiSvc = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(multiSvc)
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
-	multiSvc.Flags().StringVarP(&ip, "ip", "i", "0.0.0.0", "The IP that the UDP service listens on")
+	multiSvc.Flags().StringVarP(&ip, "ip", "i", "224.0.0.0", "The IP that the UDP service listens on")
 	multiSvc.Flags().IntVarP(&port, "port", "p", 8090, "The Port that the UDP service listens on")
 	multiSvc.Flags().IntVarP(&mtu, "mtu", "m", 1500, "Read UDP msg len")
 }
