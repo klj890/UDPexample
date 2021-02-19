@@ -13,24 +13,25 @@ import (
 
 const netWork = "udp4"
 
-func Server(ip string, port string) {
+func Server(ip string, port string, mtu int) {
 	addr := ip + ":" + port
 	udpAddr, _ := net.ResolveUDPAddr(netWork, addr)
 	udpConn, err := net.ListenUDP("udp", udpAddr)
 	if err != nil {
 		fmt.Println(err)
+
 	}
 	defer udpConn.Close()
 	fmt.Println("udp listening on ", addr)
 
 	//udp不需要Accept
 	for {
-		handleConnection(udpConn)
+		handleConnection(udpConn, mtu)
 	}
 }
 
-func handleConnection(conn *net.UDPConn) {
-	data := make([]byte, 1500)
+func handleConnection(conn *net.UDPConn, mtu int) {
+	data := make([]byte, mtu)
 	n, remoteAddr, err := conn.ReadFromUDP(data)
 	if err != nil {
 		fmt.Println("failed to read UDP msg because of ", err.Error())

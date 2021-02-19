@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func Client(ip string, port string, dataPath string) {
+func Client(ip string, port string, dataPath string, mtu int) {
 	addr := ip + ":" + port
 	data, err := utils.LoadFile(dataPath)
 	if err != nil {
@@ -25,15 +25,15 @@ func Client(ip string, port string, dataPath string) {
 	}
 	fmt.Println("udp dial ok, send to ", addr)
 	for {
-		handleConnection(udpConn, data)
+		handleConnection(udpConn, data, mtu)
 		time.Sleep(1 * time.Second)
 	}
 }
 
-func handleConnection(conn *net.UDPConn, data string) {
-	var tmpByte []byte = []byte(data)
-	if len(tmpByte) > 1500 {
-		tmpByte = tmpByte[:1500]
+func handleConnection(conn *net.UDPConn, data string, mtu int) {
+	var tmpByte = []byte(data)
+	if len(tmpByte) > mtu {
+		tmpByte = tmpByte[:mtu]
 	}
 	len, err := conn.Write(tmpByte)
 	if err != nil {

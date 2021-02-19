@@ -13,6 +13,7 @@ import (
 
 var ip string
 var port int
+var mtu int
 
 var rootCmd = &cobra.Command{
 	Use:   "UDPexample",

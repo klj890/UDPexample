@@ -20,7 +20,7 @@ var clientCmd = &cobra.Command{
 	Short: "Run a UDP Client",
 	Long:  "",
 	Run: func(cmd *cobra.Command, args []string) {
-		client.Client(ip, strconv.Itoa(port), dataPath)
+		client.Client(ip, strconv.Itoa(port), dataPath, mtu)
 	},
 }
 
@@ -30,4 +30,5 @@ func init() {
 	clientCmd.Flags().StringVarP(&ip, "ip", "i", "127.0.0.1", "Destination IP")
 	clientCmd.Flags().IntVarP(&port, "port", "p", 8090, "Destination port")
 	clientCmd.Flags().StringVarP(&dataPath, "data", "d", "./examples/data1.json", "Send data file path")
+	clientCmd.Flags().IntVarP(&mtu, "mtu", "m", 1500, "Send UDP msg length")
 }
